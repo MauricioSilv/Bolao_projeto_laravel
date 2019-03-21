@@ -5,12 +5,9 @@ use App\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
-    public function all()
-    {
-        $modelo = app(User::class);
+    protected $model = User::class;
 
-        return $modelo->all();
-    }
+   
 }

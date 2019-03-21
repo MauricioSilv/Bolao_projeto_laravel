@@ -14,11 +14,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserRepositoryInterface $list)
+    public function index(UserRepositoryInterface $model, Request $request)
     {
-        $listAll = $list->all();
 
-        return view('admin.users.index', compact('listAll'));
+        $search = '';
+
+        if(isset($request->search))
+        {
+           $search = $request->search;
+           $modelAll = $model->finWhereLike(['name','email'],$search, 'id', 'DESC');
+        }else{
+            $modelAll = $model->paginate(2, 'id','DESC');
+        }
+
+
+        return view('admin.users.index', compact('modelAll','search'));
     }
 
     /**
