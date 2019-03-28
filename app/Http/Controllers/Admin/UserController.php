@@ -27,6 +27,8 @@ class UserController extends Controller
             $modelAll = $model->paginate(2, 'id','DESC');
         }
 
+        //$request->session()->flash('msg', 'Task was successful!');
+        //$request->session()->flash('status', 'danger');
 
         return view('admin.users.index', compact('modelAll','search'));
     }

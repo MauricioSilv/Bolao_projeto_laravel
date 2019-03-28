@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+
 interface UserRepositoryInterface 
 {
     //forçando só esse objeto Collection

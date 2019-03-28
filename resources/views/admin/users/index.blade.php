@@ -8,11 +8,8 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                   @alert(['msg'=>session('msg'),'status'=>session('status')])
+                   @endalert
                     <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Início</a></li>
@@ -21,7 +18,7 @@
                     </nav>
                 <form class="form-inline" method="GET" action="{{route('users.index')}}">
                             <div class="form-group mb-2">
-                                <a href="#">Adicionar</a>
+                            <a href="{{route('register')}}">Adicionar</a>
                             </div>
                             <div class="form-group mx-sm-3 mb-2">
                             <input type="search" name="search" class="form-control" value="{{$search}}"/>
@@ -49,7 +46,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        @if(!$search)
+                        @if(!$search && $modelAll)
                             <div>
                                 {{$modelAll->links()}}
                             </div>
