@@ -12,5 +12,7 @@ interface UserRepositoryInterface
     //forçando só esse objeto LengthAwarePaginator
     public function paginate(int $paginate = 10, string $column = 'id', string $order = 'ASC'):LengthAwarePaginator;
     public function finWhereLike(array $columns, string $search, string $column = 'id', string $order = 'ASC'):Collection;
-
+    public function create(array $data):Bool; //true or false
+    public function find(int $id);
+    public function update(int $id, array $data):Bool; //true or false
 }

@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.table', 'table');
         Blade::component('components.paginate', 'paginate');
         Blade::component('components.page', 'page');
+        Blade::component('components.form', 'form');//(path,name_component)
 
     }
 }

@@ -26,6 +26,31 @@ abstract class AbstractRepository
     {
         return app($this->model);
     }
+
+    public function create(array $data):Bool
+    {
+        return (bool) $this->model->create($data);
+
+    }
+
+    public function find(int $id)
+    {
+        return $register = $this->model->find($id);
+    }
+
+    public function update(int $id, array $data):Bool
+    {
+        $register = $this->find($id);
+
+        if($register)
+        {
+            return (bool) $register->update($data);
+        }else{
+            return false;   
+        }
+    }
+
+
     public function finWhereLike(array $columns, string $search, string $column = 'id', string $order = 'ASC'):Collection
     {
         $query = $this->model;

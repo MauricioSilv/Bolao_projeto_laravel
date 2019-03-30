@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\UserRepositoryInterface;
-
+use Validator;
+use App\User;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $model;
+
+    public function __construct(UserRepositoryInterface $model)
+    {   
+        $this->model = $model;
+    }
+
     public function index(UserRepositoryInterface $model, Request $request)
     {
 
@@ -27,8 +31,8 @@ class UserController extends Controller
             $modelAll = $model->paginate(2, 'id','DESC');
         }
 
-        //$request->session()->flash('msg', 'Task was successful!');
-        //$request->session()->flash('status', 'danger');
+        //session()->flash('msg', 'Task was successful!');
+        //session()->flash('status', 'danger');
 
         return view('admin.users.index', compact('modelAll','search'));
     }
@@ -40,7 +44,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -51,7 +55,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        
+        if($this->model->create($data))
+        {
+            session()->flash('msg', 'Task was successful!');
+            session()->flash('status', 'success');
+
+            return redirect()->back();
+        }else{
+            session()->flash('msg', 'Error!');
+            session()->flash('status', 'danger');
+
+            return redirect()->back();
+        }
+     
     }
 
     /**
@@ -73,7 +95,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $register = $this->model->find($id);
+        if($register)
+        {
+            return view('admin.users.edit', compact('register'));
+        }else{
+            return redirect()->route('users.index');
+        }
     }
 
     /**
@@ -85,7 +113,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        if(!$data['password'])
+        {
+            unset($data['password']);
+        }
+
+        Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+            'password' => ['sometimes','required', 'string', 'min:8', 'confirmed'],
+        ])->validate();
+
+        if($this->model->update($id, $data))
+        {
+            session()->flash('msg', 'Task was successful!');
+            session()->flash('status', 'success');
+
+            return redirect()->back();
+        }else{
+            session()->flash('msg', 'Error!');
+            session()->flash('status', 'danger');
+
+            return redirect()->back();
+        }
+     
+        
     }
 
     /**

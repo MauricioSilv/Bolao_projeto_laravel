@@ -2,14 +2,11 @@
 
 @section('content')
 
-    @page(['col'=>12])
+    @page(['col'=>12, 'name'=>'List'])
 
 
                    @alert(['msg'=>session('msg'),'status'=>session('status')])
                    @endalert
-                   
-                   @breadcrumb()
-                   @endbreadcrumb
 
                    @search(['search'=>$search])
                    @endsearch
