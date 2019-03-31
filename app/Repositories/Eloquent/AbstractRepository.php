@@ -38,6 +38,11 @@ abstract class AbstractRepository
         return $register = $this->model->find($id);
     }
 
+    public function delete(int $id):Bool
+    {
+        return $register = $this->model->delete($id);
+    }
+
     public function update(int $id, array $data):Bool
     {
         $register = $this->find($id);

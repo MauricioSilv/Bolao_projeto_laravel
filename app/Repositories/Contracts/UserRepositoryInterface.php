@@ -15,4 +15,5 @@ interface UserRepositoryInterface
     public function create(array $data):Bool; //true or false
     public function find(int $id);
     public function update(int $id, array $data):Bool; //true or false
+    public function delete(int $id):Bool;
 }

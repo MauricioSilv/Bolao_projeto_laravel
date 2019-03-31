@@ -82,9 +82,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        $register = $this->model->find($id);
+        if($register)
+        {
+            if(!isset($request->delete))
+            {
+                $delete = false;
+            }else{
+                session()->flash('msg', 'Delete this record?');
+                session()->flash('status', 'info');
+                $delete = true;
+            }
+
+            return view('admin.users.show', compact('register','delete'));
+        }else{
+            return redirect()->route('users.index');
+        }
     }
 
     /**
@@ -150,6 +165,19 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $register = $this->model->find($id);
+
+        $register->delete();
+
+        if($register)
+        {
+            session()->flash('msg', 'Deleting was successful!');
+            session()->flash('status', 'success');
+        }else{
+            session()->flash('msg', 'Error!');
+            session()->flash('status', 'danger');
+        }
+
+        return redirect()->route('users.index');
     }
 }
