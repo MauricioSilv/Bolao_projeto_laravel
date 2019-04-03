@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @page(['col'=>12, 'name'=>'Edit users'])
+    @page(['col'=>12, 'name'=>'Edit permission'])
 
 
         @alert(['msg'=>session('msg'),'status'=>session('status')])

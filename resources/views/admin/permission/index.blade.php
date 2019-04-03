@@ -4,11 +4,10 @@
 
     @page(['col'=>12, 'name'=>'List'])
 
-
                    @alert(['msg'=>session('msg'),'status'=>session('status')])
                    @endalert
 
-                   @search(['search'=>$search, 'routeName'=>$routeName])
+                   @search(['search'=>$search, 'routeName'=> $routeName])
                    @endsearch
                
                    @table(['list'=>$list, 'columnList'=>$columnList, 'routeName'=>$routeName])

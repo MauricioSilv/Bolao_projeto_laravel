@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\Repositories\Contracts\UserRepositoryInterface',
         'App\Repositories\Eloquent\UserRepository');
+
+        $this->app->bind('App\Repositories\Contracts\PermissionRepositoryInterface',
+        'App\Repositories\Eloquent\PermissionRepository');
     }
 
     /**

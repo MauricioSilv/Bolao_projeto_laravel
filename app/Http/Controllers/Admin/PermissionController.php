@@ -4,40 +4,38 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\PermissionRepositoryInterface;
 use Validator;
-use App\User;
-use Illuminate\Validation\Rule;
 
-class UserController extends Controller
+class PermissionController extends Controller
 {
     protected $model;
-    protected $route = "users";
+    protected $route = "permission";
 
-    public function __construct(UserRepositoryInterface $model)
+    public function __construct(PermissionRepositoryInterface $model)
     {   
         $this->model = $model;
     }
 
-    public function index(UserRepositoryInterface $model, Request $request)
+    public function index(PermissionRepositoryInterface $model, Request $request)
     {
 
         $search = '';
         $routeName = $this->route;
         $columnList = ['id'=>'#','name'=>'name','description'=>'description'];
 
-
         if(isset($request->search))
         {
            $search = $request->search;
-           $list = $model->finWhereLike(['name','email'],$search, 'id', 'DESC');
+           $list = $model->finWhereLike(['name','description'],$search, 'id', 'DESC');
         }else{
             $list = $model->paginate(2, 'id','DESC');
         }
 
         //session()->flash('msg', 'Task was successful!');
         //session()->flash('status', 'danger');
-        return view('admin.'.$routeName.'.index', compact('list','search', 'routeName','columnList'));
+
+        return view('admin.'.$routeName.'.index', compact('list','search', 'routeName', 'columnList'));
     }
 
     /**
@@ -48,7 +46,6 @@ class UserController extends Controller
     public function create()
     {
         $routeName = $this->route;
-
         return view('admin.'.$routeName.'.create', compact('routeName'));
     }
 
@@ -62,8 +59,7 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'description' => ['required', 'string', 'max:255'],
         ]);
         
         if($this->model->create($data))
@@ -90,6 +86,7 @@ class UserController extends Controller
     public function show($id, Request $request)
     {
         $routeName = $this->route;
+
         $register = $this->model->find($id);
         if($register)
         {
@@ -121,7 +118,7 @@ class UserController extends Controller
         $register = $this->model->find($id);
         if($register)
         {
-            return view('admin.'.$routeName.'.edit', compact('register','routeName'));
+            return view('admin.'.$routeName.'.edit', compact('register', 'routeName'));
         }else{
             return redirect()->route($routeName.'.index');
         }
@@ -138,15 +135,9 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        if(!$data['password'])
-        {
-            unset($data['password']);
-        }
-
         Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'password' => ['sometimes','required', 'string', 'min:8', 'confirmed'],
+            'description' => ['required', 'string', 'max:255'],
         ])->validate();
 
         if($this->model->update($id, $data))
@@ -174,7 +165,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         $routeName = $this->route;
-
         $register = $this->model->find($id);
 
         $register->delete();

@@ -1,7 +1,7 @@
 
 
-@if(!$search && $modelAll)
+@if(!$search && $list)
 <div>
-    {{$modelAll->links()}}
+    {{$list->links()}}
 </div>
 @endif
