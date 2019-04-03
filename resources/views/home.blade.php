@@ -28,6 +28,13 @@
                         <p class="card-text">Create or edit</p>
                         </div>
                     </div>
+
+                    <div style="cursor:pointer" onclick="window.location ='{{route('roles.index')}}' " class="card text-white bg-success m-3" style="max-width: 18rem;">
+                        <div class="card-header">Roles list</div>
+                        <div class="card-body">
+                        <p class="card-text">Create or edit</p>
+                        </div>
+                    </div>
                   </div>
               </div>
                 </div>
