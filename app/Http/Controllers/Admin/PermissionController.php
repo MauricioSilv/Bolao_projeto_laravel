@@ -29,7 +29,7 @@ class PermissionController extends Controller
            $search = $request->search;
            $list = $model->finWhereLike(['name','description'],$search, 'id', 'DESC');
         }else{
-            $list = $model->paginate(2, 'id','DESC');
+            $list = $model->paginate(10, 'id','DESC');
         }
 
         //session()->flash('msg', 'Task was successful!');

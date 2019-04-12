@@ -20,6 +20,18 @@
             </span>
         @endif
     </div>
+
+    <div class="form-group col-6">
+        <label for="permissions">Permissions</label>
+        <select class="form-control" multiple name="permissions[]">
+          @foreach ($permissions as $permission)
+            <option value="{{$permission->id}}">
+                {{$permission->name}}    
+            </option> 
+          @endforeach
+        </select>
+
+    </div>
     
    
 </div>

@@ -5,16 +5,19 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\RoleRepositoryInterface;
+use App\Repositories\Contracts\PermissionRepositoryInterface;
 use Validator;
 
 class RoleController extends Controller
 {
     protected $model;
     protected $route = "roles";
+    protected $modelPermission;
 
-    public function __construct(RoleRepositoryInterface $model)
+    public function __construct(RoleRepositoryInterface $model, PermissionRepositoryInterface $modelPermission)
     {   
         $this->model = $model;
+        $this->modelPermission = $modelPermission;
     }
 
     public function index(RoleRepositoryInterface $model, Request $request)
@@ -45,8 +48,10 @@ class RoleController extends Controller
      */
     public function create()
     {
+
+        $permissions = $this->modelPermission->all('name');
         $routeName = $this->route;
-        return view('admin.'.$routeName.'.create', compact('routeName'));
+        return view('admin.'.$routeName.'.create', compact('routeName','permissions'));
     }
 
     /**
@@ -114,11 +119,12 @@ class RoleController extends Controller
     public function edit($id)
     {
         $routeName = $this->route;
+        $permissions = $this->modelPermission->all('name');
 
         $register = $this->model->find($id);
         if($register)
         {
-            return view('admin.'.$routeName.'.edit', compact('register', 'routeName'));
+            return view('admin.'.$routeName.'.edit', compact('register', 'routeName','permissions'));
         }else{
             return redirect()->route($routeName.'.index');
         }
