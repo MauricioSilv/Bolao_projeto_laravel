@@ -65,6 +65,7 @@ class RoleController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
+            'permissions' =>['required','array']
         ]);
         
         if($this->model->create($data))

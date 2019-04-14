@@ -12,7 +12,7 @@
     </div>
     <div class="form-group col-6">
         <label for="description">Description</label>
-        <input type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" value="{{ old('description') ?? ($register->description ?? '') }}" required autofocus>
+        <input type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" value="{{ old('description') ?? ($register->description ?? '') }}"  autofocus>
         
         @if ($errors->has('description'))
             <span class="invalid-feedback" role="alert">
@@ -23,9 +23,37 @@
 
     <div class="form-group col-6">
         <label for="permissions">Permissions</label>
-        <select class="form-control" multiple name="permissions[]">
+        <select multiple class="form-control" name="permissions[]">
           @foreach ($permissions as $permission)
-            <option value="{{$permission->id}}">
+            @php
+                $select = "";
+                
+                if(old('permissions') !== null)
+                {
+                    foreach (old('permissions') as $key => $value) 
+                    {
+                        if($value == $permission->id)
+                        {
+                            $select = "selected";
+                        }
+                    }
+                }else{
+                    if($register ?? false)
+                    {
+                        foreach ($register->permissions as $key => $permissi) 
+                    {
+                        if($permissi->id == $permission->id)
+                        {
+                            $select = "selected";
+                        }
+                    }
+                    }
+                }
+                
+            @endphp
+
+
+            <option {{$select}} value="{{$permission->id}}">
                 {{$permission->name}}    
             </option> 
           @endforeach
