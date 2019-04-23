@@ -14,7 +14,15 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         $data['password'] = Hash::make($data['password']);
 
-        return (bool) $this->model->create($data);
+        $registe = $this->model->create($data);
+        if(isset($data['roles']) && count($data['roles']))
+        {
+            foreach ($data['roles'] as $key => $value) {
+                $registe->roles()->attach($value);
+            }
+        }
+
+        return (bool) $registe;
 
     }
 
@@ -27,6 +35,20 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             if(isset($data['password']))
             {
                 $data['password'] = Hash::make($data['password']);
+            }
+
+            $roles = $register->roles;
+            if(count($roles))
+            {
+                foreach ($roles as $key => $value) {
+                    $register->roles()->detach($value->id);
+                }
+            }
+            if(isset($data['roles']) && count($data['roles']))
+            {
+                foreach ($data['roles'] as $key => $value) {
+                    $register->roles()->attach($value);
+                }
             }
             return (bool) $register->update($data);
         }else{

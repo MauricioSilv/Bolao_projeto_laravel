@@ -8,15 +8,18 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use Validator;
 use App\User;
 use Illuminate\Validation\Rule;
+use App\Repositories\Contracts\RoleRepositoryInterface;
 
 class UserController extends Controller
 {
     protected $model;
     protected $route = "users";
+    protected $modelRole;
 
-    public function __construct(UserRepositoryInterface $model)
+    public function __construct(UserRepositoryInterface $model, RoleRepositoryInterface $modelRole)
     {   
         $this->model = $model;
+        $this->modelRole = $modelRole;
     }
 
     public function index(UserRepositoryInterface $model, Request $request)
@@ -47,9 +50,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $roles = $this->modelRole->all();
         $routeName = $this->route;
 
-        return view('admin.'.$routeName.'.create', compact('routeName'));
+        return view('admin.'.$routeName.'.create', compact('routeName','roles'));
     }
 
     /**
@@ -117,11 +121,12 @@ class UserController extends Controller
     public function edit($id)
     {
         $routeName = $this->route;
+        $roles = $this->modelRole->all();
 
         $register = $this->model->find($id);
         if($register)
         {
-            return view('admin.'.$routeName.'.edit', compact('register','routeName'));
+            return view('admin.'.$routeName.'.edit', compact('register','routeName','roles'));
         }else{
             return redirect()->route($routeName.'.index');
         }

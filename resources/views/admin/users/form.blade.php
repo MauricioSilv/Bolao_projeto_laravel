@@ -32,4 +32,45 @@
         <label for="password_confirmation">Password Confirmation</label>
         <input type="password" class="form-control" name="password_confirmation" id="">
     </div>
+
+    <div class="form-group col-6">
+        <label for="roles">Roles</label>
+        <select multiple class="form-control" name="roles[]">
+          @foreach ($roles as $role)
+            @php
+                $select = "";
+                
+                if(old('roles') !== null)
+                {
+                    foreach (old('roles') as $key => $value) 
+                    {
+                        if($value == $role->id)
+                        {
+                            $select = "selected";
+                        }
+                    }
+                }else{
+                    if($register ?? false)
+                    {
+                        foreach ($register->roles as $key => $rol) 
+                    {
+                        if($rol->id == $role->id)
+                        {
+                            $select = "selected";
+                        }
+                    }
+                    }
+                }
+                
+            @endphp
+
+
+            <option {{$select}} value="{{$role->id}}">
+                {{$role->name}}    
+            </option> 
+          @endforeach
+        </select>
+
+    </div>
+
 </div>
