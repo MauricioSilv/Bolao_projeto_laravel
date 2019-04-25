@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -41,4 +42,29 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Role');
     }
+
+    public function hasRoles($roles)
+    {
+        $userRoles = $this->roles();
+
+        return $roles->intersect($userRoles)->count();
+        
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole("Admin");
+    }
+
+    public function hasRole($role)
+    {
+        if(is_string($role))
+        {
+            $role = Role::where('name', '=',$role)->firstOrFail();
+        }
+
+        return (boolean) $this->roles()->find($role->id);
+        
+    }
+
 }
