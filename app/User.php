@@ -45,9 +45,9 @@ class User extends Authenticatable
 
     public function hasRoles($roles)
     {
-        $userRoles = $this->roles();
+        $userRoles = $this->roles;
 
-        return $roles->intersect($userRoles)->count();
+       return (boolean) $roles->intersect($userRoles)->count();
         
     }
 
