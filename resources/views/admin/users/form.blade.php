@@ -2,7 +2,7 @@
 <div class="row">
     <div class="form-group col-6">
         <label for="name">Name</label>
-        <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') ?? ($register->name ?? '') }}" required autofocus>
+        <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') ?? ($register->name ?? '') }}"  autofocus>
         
         @if ($errors->has('name'))
             <span class="invalid-feedback" role="alert">
@@ -12,7 +12,7 @@
     </div>
     <div class="form-group col-6">
         <label for="email">E-mail</label>
-        <input type="mail" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') ?? ($register->email ?? '') }}" required autofocus>
+        <input type="mail" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') ?? ($register->email ?? '') }}"  autofocus>
         @if ($errors->has('email'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('email') }}</strong>

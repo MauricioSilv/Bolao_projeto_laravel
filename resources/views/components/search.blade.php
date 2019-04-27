@@ -1,6 +1,10 @@
 <form class="form-inline" method="GET" action="{{route($routeName.'.index')}}">
     <div class="form-group mb-2">
-    <a href="{{route($routeName.'.create')}}">Adicionar</a>
+
+        @can('create-users')
+            <a href="{{route($routeName.'.create')}}">Adicionar</a>
+        @endcan
+
     </div>
     <div class="form-group mx-sm-3 mb-2">
     <input type="search" name="search" class="form-control" value="{{$search}}"/>
