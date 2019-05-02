@@ -1,36 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-@page(['col'=>8, 'name'=>'Painel'])
+@page(['col'=>12, 'name'=>'Painel'])
 
         @alert(['msg'=>session('msg'),'status'=>session('status')])
         @endalert
     
-        <div class="row">
-                @can('list-user')
-                   <div style="cursor:pointer" onclick="window.location ='{{route('users.index')}}' " class="card text-white bg-primary m-3" style="max-width: 18rem;">
-                       <div class="card-header">List of users</div>
-                       <div class="card-body">
-                           <p class="card-text">Create or edit</p>
-                       </div>
-                   </div>
-                @endcan
-                
-             
-               <div style="cursor:pointer" onclick="window.location ='{{route('permission.index')}}' " class="card text-white bg-danger m-3" style="max-width: 18rem;">
-                   <div class="card-header">Permissions list</div>
-                   <div class="card-body">
-                   <p class="card-text">Create or edit</p>
-                   </div>
-               </div>
 
-               <div style="cursor:pointer" onclick="window.location ='{{route('roles.index')}}' " class="card text-white bg-success m-3" style="max-width: 18rem;">
-                   <div class="card-header">Roles list</div>
-                   <div class="card-body">
-                   <p class="card-text">Create or edit</p>
-                   </div>
-               </div>
-             </div>        
-                       
+        <div id="portfolio">
+            <div class="row">
+                @can('list-user')
+                    <div style="cursor:pointer" onclick="window.location ='{{route('users.index')}}' " class="col-md-4 col-sm-6 portfolio-item">
+                      <a class="portfolio-link">
+                        <div class="portfolio-hover">
+                          <div class="portfolio-hover-content">
+                            <i class="fa fa-users fa-3x"></i>
+                          </div>
+                        </div>
+                        <img class="img-fluid" src="img/portfolio/05-thumbnail.jpg" alt="">
+                      </a>
+                      <div class="portfolio-caption">
+                        <h4>List of users</h4>
+                        <p class="text-muted">Create or edit</p>
+                      </div>
+                    </div>
+                @endcan
+                <div style="cursor:pointer" onclick="window.location ='{{route('permission.index')}}' " class="col-md-4 col-sm-6 portfolio-item">
+                        <a class="portfolio-link">
+                          <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                              <i class="fa fa-exclamation-triangle fa-3x"></i>
+                            </div>
+                          </div>
+                          <img class="img-fluid" src="img/portfolio/03-thumbnail.jpg" alt="">
+                        </a>
+                        <div class="portfolio-caption">
+                          <h4>Permissions list</h4>
+                          <p class="text-muted">Create or edit</p>
+                        </div>
+                      </div>
+
+                      <div style="cursor:pointer" onclick="window.location ='{{route('roles.index')}}' " class="col-md-4 col-sm-6 portfolio-item">
+                            <a class="portfolio-link">
+                              <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                  <i class="fa fa-cog fa-3x"></i>
+                                </div>
+                              </div>
+                              <img class="img-fluid" src="img/portfolio/02-thumbnail.jpg" alt="">
+                            </a>
+                            <div class="portfolio-caption">
+                              <h4>Roles list</h4>
+                              <p class="text-muted">Create or edit</p>
+                            </div>
+                      </div>
+                   
+                </div>
+              </div>     
     @endpage
 @endsection
