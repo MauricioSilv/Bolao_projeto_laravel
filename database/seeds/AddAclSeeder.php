@@ -33,6 +33,15 @@ class AddAclSeeder extends Seeder
         $listUser = \App\Permission::firstOrCreate(['name' => 'list-user'], [
             'description' =>'Listar usuarios'
         ]);
+        $createUser = \App\Permission::firstOrCreate(['name' => 'create-user'], [
+            'description' =>'Criar usuarios'
+        ]);
+
+        //role com permission
+
+        $manager->permissions()->attach($listUser);
+        $manager->permissions()->attach($createUser);
+
 
     }
 }

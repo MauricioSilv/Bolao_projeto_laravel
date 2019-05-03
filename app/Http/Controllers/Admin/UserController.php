@@ -9,6 +9,8 @@ use Validator;
 use App\User;
 use Illuminate\Validation\Rule;
 use App\Repositories\Contracts\RoleRepositoryInterface;
+use Illuminate\Support\Facades\Gate;
+
 
 class UserController extends Controller
 {
@@ -28,7 +30,17 @@ class UserController extends Controller
         $search = '';
         $routeName = $this->route;
         $columnList = ['id'=>'#','name'=>'name','email'=>'e-mail'];
+        
+        //$this->authorize('list-user'); //Autorização
 
+        //tratando msgs de erro de autorização
+        if(Gate::denies('list-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
 
         if(isset($request->search))
         {
@@ -50,6 +62,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        //Autorização requerida
+        $this->authorize('create-user');
+
         $roles = $this->modelRole->all();
         $routeName = $this->route;
 
@@ -64,6 +79,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $this->authorize('create-user');
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

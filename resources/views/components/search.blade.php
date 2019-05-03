@@ -1,7 +1,7 @@
 <form class="form-inline" method="GET" action="{{route($routeName.'.index')}}">
     <div class="form-group mb-2">
 
-        @can('create-users')
+        @can('create-user')
             <a href="{{route($routeName.'.create')}}">Adicionar</a>
         @endcan
 
