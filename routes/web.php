@@ -16,6 +16,7 @@ Route::middleware('auth')->namespace('Admin')->group(function () {
 
 Route::prefix('admin')->middleware('auth')->namespace('Admin')->group(function () {
     Route::resource('/users', 'UserController');
+    Route::resource('/betting', 'BettingController');
 });
 
 Route::prefix('admin')->middleware(['auth','can:acl'])->namespace('Admin')->group(function () {

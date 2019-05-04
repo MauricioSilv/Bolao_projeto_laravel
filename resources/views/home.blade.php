@@ -56,6 +56,21 @@
                             </div>
                       </div>
                    @endcan
+
+                   <div style="cursor:pointer" onclick="window.location ='{{route('betting.index')}}' " class="col-md-4 col-sm-6 portfolio-item">
+                    <a class="portfolio-link">
+                      <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                          <i class="fa fa-users fa-3x"></i>
+                        </div>
+                      </div>
+                      <img class="img-fluid" src="img/portfolio/06-thumbnail.jpg">
+                    </a>
+                    <div class="portfolio-caption">
+                      <h4>List of bettings</h4>
+                      <p class="text-muted">Create or edit</p>
+                    </div>
+                  </div>
                 </div>
               </div>     
     @endpage
