@@ -31,7 +31,6 @@ class UserController extends Controller
         $routeName = $this->route;
         $columnList = ['id'=>'#','name'=>'name','email'=>'e-mail'];
         
-        //$this->authorize('list-user'); //Autorização
 
         //tratando msgs de erro de autorização
         if(Gate::denies('list-user'))
@@ -62,8 +61,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        //Autorização requerida
-        $this->authorize('create-user');
+         if(Gate::denies('create-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
 
         $roles = $this->modelRole->all();
         $routeName = $this->route;
@@ -80,7 +84,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         
-        $this->authorize('create-user');
+        if(Gate::denies('create-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -111,6 +121,15 @@ class UserController extends Controller
      */
     public function show($id, Request $request)
     {
+
+        if(Gate::denies('show-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
+
         $routeName = $this->route;
         $register = $this->model->find($id);
         if($register)
@@ -138,6 +157,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::denies('edit-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
+
         $routeName = $this->route;
         $roles = $this->modelRole->all();
 
@@ -159,6 +186,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if(Gate::denies('edit-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
+
         $data = $request->all();
 
         if(!$data['password'])
@@ -196,6 +232,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if(Gate::denies('delete-user'))
+        {
+            session()->flash('msg', 'Acesso negado!');
+            session()->flash('status', 'danger');
+
+            return redirect()->route('home');
+        }
+
         $routeName = $this->route;
 
         $register = $this->model->find($id);

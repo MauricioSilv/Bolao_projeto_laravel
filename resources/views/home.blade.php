@@ -25,6 +25,7 @@
                       </div>
                     </div>
                 @endcan
+                @can('acl')
                 <div style="cursor:pointer" onclick="window.location ='{{route('permission.index')}}' " class="col-md-4 col-sm-6 portfolio-item">
                         <a class="portfolio-link">
                           <div class="portfolio-hover">
@@ -54,7 +55,7 @@
                               <p class="text-muted">Create or edit</p>
                             </div>
                       </div>
-                   
+                   @endcan
                 </div>
               </div>     
     @endpage

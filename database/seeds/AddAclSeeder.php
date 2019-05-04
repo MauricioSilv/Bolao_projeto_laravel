@@ -36,6 +36,19 @@ class AddAclSeeder extends Seeder
         $createUser = \App\Permission::firstOrCreate(['name' => 'create-user'], [
             'description' =>'Criar usuarios'
         ]);
+        $editUser = \App\Permission::firstOrCreate(['name' => 'edit-user'], [
+            'description' =>'Editar usuarios'
+        ]);
+        $showUser = \App\Permission::firstOrCreate(['name' => 'show-user'], [
+            'description' =>'Info usuarios'
+        ]);
+        $deleteUser = \App\Permission::firstOrCreate(['name' => 'delete-user'], [
+            'description' =>'Excluir usuarios'
+        ]);
+
+        $aclUser = \App\Permission::firstOrCreate(['name' => 'acl'], [
+            'description' =>'Acesso ao ACL'
+        ]);
 
         //role com permission
 
