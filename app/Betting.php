@@ -21,6 +21,11 @@ class Betting extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function rounds()
+    {
+        return $this->hasMany('App\Round');
+    }
+
     //acessor/mutators para adicionar um registro adcional a tabela
     public function getUserNameAttribute()
     {
