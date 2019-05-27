@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Role;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable
 {
@@ -43,11 +44,25 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
     }
 
+    
     public function bettings()
     {
         return $this->hasMany('App\Betting');
     }
+    
+    public function getRoundsAttribute()
+    {
+        $listbettings = $this->bettings;
+        $rounds = [];
+        foreach ($listbettings as $value) 
+        {
+            array_push($rounds, $value->rounds);
+        }
 
+        $listRounds = Arr::collapse($rounds);
+
+        return $listRounds;
+    }
     public function hasRoles($roles)
     {
         $userRoles = $this->roles;

@@ -28,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('App\Repositories\Contracts\RoundRepositoryInterface',
         'App\Repositories\Eloquent\RoundRepository');
+
+        $this->app->bind('App\Repositories\Contracts\MatchRepositoryInterface',
+        'App\Repositories\Eloquent\MatchRepository');
     }
 
     /**
