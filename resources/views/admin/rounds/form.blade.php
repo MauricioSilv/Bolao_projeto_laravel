@@ -40,7 +40,7 @@
     </div>
     <div class="form-group col-6">
         <label for="date_start">Date start</label>
-    <input type="datetime" placeholder="{{date('d-m-Y H:i')}}" class="form-control{{ $errors->has('date_start') ? ' is-invalid' : '' }}" name="date_start" value="{{ old('date_start') ?? ($register->date_start ?? '') }}" autofocus>
+    <input type="datetime" placeholder="{{date('Y-m-d H:i')}}" class="form-control{{ $errors->has('date_start') ? ' is-invalid' : '' }}" name="date_start" value="{{ old('date_start') ?? ($register->date_start ?? '') }}" autofocus>
         
         @if ($errors->has('date_start'))
             <span class="invalid-feedback" role="alert">
@@ -51,7 +51,7 @@
     
     <div class="form-group col-6">
         <label for="date_end">Date end</label>
-    <input type="datetime" placeholder="{{date('d-m-Y H:i')}}" class="form-control{{ $errors->has('date_end') ? ' is-invalid' : '' }}" name="date_end" value="{{ old('date_end') ?? ($register->date_end ?? '') }}" autofocus>
+    <input type="datetime" placeholder="{{date('Y-m-d H:i')}}" class="form-control{{ $errors->has('date_end') ? ' is-invalid' : '' }}" name="date_end" value="{{ old('date_end') ?? ($register->date_end ?? '') }}" autofocus>
         
         @if ($errors->has('date_end'))
             <span class="invalid-feedback" role="alert">

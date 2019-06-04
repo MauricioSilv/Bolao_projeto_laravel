@@ -25,13 +25,13 @@ class MatchController extends Controller
         $columnList = [
             'id'=>'#',
             'title'=>'Title',
-            'stadium' =>'Estádio',
-            'team_a' => 'Data inicio',
-            'team_b' => 'Data fim',
-            'result' => 'Resultado',
-            'scoreboard_a' => 'Q.Gols A',
-            'scoreboard_b' => 'Q.Gols B',
-            'date' => 'Data'
+            'stadium' =>'Stadium',
+            'team_a' => 'Team A',
+            'team_b' => 'Team B',
+            'result' => 'Results',
+            'scoreboard_a' => 'C.Goals A',
+            'scoreboard_b' => 'C.Goals B',
+            'date' => 'Date'
         ];
 
         if(isset($request->search))
@@ -57,7 +57,8 @@ class MatchController extends Controller
     {
         $routeName = $this->route;
         $user = auth()->user();
-        $listRel = $user->bettings;
+        $listRel = $user->rounds;
+    
 
 
         return view('admin.'.$routeName.'.create', compact('routeName','listRel'));
@@ -74,6 +75,7 @@ class MatchController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'stadium' => ['required'],
+            'round_id'=> ['required'],
             'team_a' => ['required'],
             'team_b' => ['required'],
             'result' => ['required'],
@@ -136,8 +138,8 @@ class MatchController extends Controller
         $register = $this->model->find($id);
         $routeName = $this->route;
         $user = auth()->user();
-        $listRel = $user->bettings;
-        $register_id = $register->betting_id;
+        $listRel = $user->rounds;
+        $register_id = $register->round_id;
 
         if($register)
         {
